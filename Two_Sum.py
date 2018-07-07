@@ -28,7 +28,7 @@ class Solution(object):
 
         """ We went through the whole i/c list and dud not find a pair to sum the target: return both indices -1 """
         return [-1, -1]
-
+ 
 
 nums = [2, 7, 11, 15]
 target = 9
