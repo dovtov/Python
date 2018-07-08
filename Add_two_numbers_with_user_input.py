@@ -7,7 +7,7 @@
 #Output: 7 -> 0 -> 8
 #Explanation: 342 + 465 = 807.
 
-#!/usr/bin/python3.6
+#!/usr/bin/python3.6m
 
 # Definition for singly-linked list.
 class ListNode(object):
@@ -91,16 +91,60 @@ class Solution(object):
         return (ret_linked_list)
 
 
+    def createLinkedLists(self):
+        for linked_list_num in range(1, 3):
+            print("Start entering lnked ist # %d" % (linked_list_num))
+            digit_number = 1
+            # A cycle to enter digits for current list
+            while True:
+                # Entering a single digit
+                new_digit = -1
+                while not (0 < new_digit <= 10):
+                    try:
+                        new_digit = int(input("Enter a digit between 0 and 9 (to finish list enter 10): "))
+                    except ValueError:
+                        print("Wrong input - re-asking:")
+                        pass  # Just re-ask the question.
 
-# Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
-L1 = ListNode(2)
-L1.next = ListNode(4)
-L1.next.next = ListNode(3)
-L2 = ListNode(5)
-L2.next = ListNode(6)
-L2.next.next = ListNode(4)
+                if new_digit == 10:
+                    # Finish entering digits for the current list, and print current linked list
+                    if linked_list_num == 1:
+                        cur_node = L1
+                    else:
+                        cur_node = L2
 
+                    while True:
+                        print("-> %d " % (cur_node.val), end='', flush=True)
+                        if cur_node.next == None:
+                            print("\n")
+                            break
+                        else:
+                            cur_node = cur_node.next
+                    break
+
+                # Correct digit is entered - create a node for it
+                node = ListNode(new_digit)
+
+
+                # If this is the 1st node of the list - make it the root of the corresponding linked list (L1 or L2):
+                if digit_number == 1:
+                    if linked_list_num == 1:
+                        L1 = node
+                    else:
+                        L2 = node
+                else:
+                    # If this is not the 1st node of the list - point the previous node.next to this new one:
+                    prev_node.next = node
+
+                prev_node = node
+                digit_number += 1
+
+        return (L1, L2)
+
+L1 = ListNode(13)
+L2 = ListNode(25)
 sol = Solution()
+L1,L2 = sol.createLinkedLists()
 ret_linked_list = sol.addTwoNumbers(L1, L2)
 
 ret_node = ret_linked_list
